@@ -94,6 +94,27 @@ TIME_ZONE = getattr(configuration, 'TIME_ZONE', 'UTC')
 WEBHOOKS_ENABLED = getattr(configuration, 'WEBHOOKS_ENABLED', False)
 
 
+# Attempt to import SAML configuration if it has been defined = False
+try:
+    from netbox.saml_config import *
+    SAML_CONFIGURED = True
+except ImportError:
+    SAML_CONFIGURED = False
+
+# SAML configuration (optional)
+if SAML_CONFIGURED:
+    try:
+        import django_saml2_auth
+        # Enable logging for django_auth_ldap
+        saml_logger = logging.getLogger('django_auth_saml')
+        saml_logger.addHandler(logging.StreamHandler())
+        saml_logger.setLevel(logging.DEBUG)
+    except ImportError:
+        raise ImproperlyConfigured(
+            "SAML authentication has been configured, but django_saml2_auth is not installed. You can remove "
+            "netbox/saml_config.py to disable SAML."
+        )
+
 #
 # Database
 #
@@ -188,6 +209,10 @@ INSTALLED_APPS = [
 # Only load django-rq if the webhook backend is enabled
 if WEBHOOKS_ENABLED:
     INSTALLED_APPS.append('django_rq')
+
+# Only load django_saml2_auth if it is configured
+if SAML_CONFIGURED:
+    INSTALLED_APPS.append('django_saml2_auth')
 
 # Middleware
 MIDDLEWARE = (
