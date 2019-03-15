@@ -6,6 +6,7 @@ The following sections detail how to set up a new instance of NetBox:
 2. [NetBox components](2-netbox.md)
 3. [HTTP dameon](3-http-daemon.md)
 4. [LDAP authentication](4-ldap.md) (optional)
+4. [SAML authentication](5-saml.md) (optional)
 
 # Upgrading
 

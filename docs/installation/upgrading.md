@@ -45,6 +45,12 @@ Copy the LDAP configuration if using LDAP:
 # cp netbox-X.Y.Z/netbox/netbox/ldap_config.py netbox/netbox/netbox/ldap_config.py
 ```
 
+Copy the SAML configuration if using SAML:
+
+```no-highlight
+# cp netbox-X.Y.Z/netbox/netbox/saml_config.py netbox/netbox/netbox/saml_config.py
+```
+
 ## Option B: Clone the Git Repository (latest master release)
 
 This guide assumes that NetBox is installed at `/opt/netbox`. Pull down the most recent iteration of the master branch:
