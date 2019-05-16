@@ -191,6 +191,8 @@ if WEBHOOKS_ENABLED:
 
 # Middleware
 MIDDLEWARE = (
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -200,7 +202,6 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'utilities.middleware.ExceptionHandlingMiddleware',
     'utilities.middleware.LoginRequiredMiddleware',
     'utilities.middleware.APIVersionMiddleware',
