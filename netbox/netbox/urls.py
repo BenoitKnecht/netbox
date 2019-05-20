@@ -72,6 +72,8 @@ if settings.SAML_CONFIGURED:
     import django_saml2_auth.views
     _patterns += [
         path(r'saml2_auth/', include('django_saml2_auth.urls')),
+        path(r'saml2_auth/login/', django_saml2_auth.views.signin, name='saml2-signin'),
+        path(r'saml2_auth/logout/', django_saml2_auth.views.signout, name='saml2-signout'),
     ]
 
 if settings.DEBUG:

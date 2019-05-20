@@ -19,17 +19,32 @@
         {% endif %}
         <form action="{% url 'login' %}" method="post" class="form form-horizontal">
             <div class="panel panel-default">
+                {% if settings.SAML2_AUTH %}
+                <div class="panel-heading text-center">
+                    <a href="{% url 'saml2-signin' %}{% if 'next' in request.GET %}?next={{ request.GET.next|urlencode }}{% endif %}"
+                        class="btn btn-primary pull-left align-middle">
+                        Single Sign-On
+                    </a>
+                    <span class="btn align-middle">— or —</span>
+                    <a class="collapsed btn btn-default pull-right align-middle" data-toggle="collapse" href="#collapse-login">
+                        Local Log In
+                    </a>
+                </div>
+                {% else %}
                 <div class="panel-heading">
                     <strong>Log In</strong>
                 </div>
-                <div class="panel-body">
-                    {% csrf_token %}
-                    {% if 'next' in request.GET %}<input type="hidden" name="next" value="{{ request.GET.next }}" />{% endif %}
-                    {% if 'next' in request.POST %}<input type="hidden" name="next" value="{{ request.POST.next }}" />{% endif %}
-                    {% render_form form %}
-                </div>
-                <div class="panel-footer text-right">
-                    <button type="submit" class="btn btn-primary">Log In</button>
+                {% endif %}
+                <div id="collapse-login" class="panel-collapse collapse{% if not settings.SAML2_AUTH %} in{% endif %}">
+                    <div class="panel-body">
+                        {% csrf_token %}
+                        {% if 'next' in request.GET %}<input type="hidden" name="next" value="{{ request.GET.next }}" />{% endif %}
+                        {% if 'next' in request.POST %}<input type="hidden" name="next" value="{{ request.POST.next }}" />{% endif %}
+                        {% render_form form %}
+                    </div>
+                    <div class="panel-footer text-right">
+                        <button type="submit" class="btn btn-primary">Log In</button>
+                    </div>
                 </div>
             </div>
         </form>
