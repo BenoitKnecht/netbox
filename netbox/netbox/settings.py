@@ -93,6 +93,17 @@ TIME_FORMAT = getattr(configuration, 'TIME_FORMAT', 'g:i a')
 TIME_ZONE = getattr(configuration, 'TIME_ZONE', 'UTC')
 WEBHOOKS_ENABLED = getattr(configuration, 'WEBHOOKS_ENABLED', False)
 
+DEFAULT_FILE_STORAGE = getattr(configuration, 'DEFAULT_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage')
+if DEFAULT_FILE_STORAGE == 'storages.backends.s3boto3.S3Boto3Storage':
+    try:
+        AWS_STORAGE_BUCKET_NAME = getattr(configuration, 'AWS_STORAGE_BUCKET_NAME')
+    except AttributeError as e:
+        raise ImproperlyConfigured("AWS_STORAGE_BUCKET_NAME is mandatory "
+                                   "when DEFAULT_FILE_STORAGE == "
+                                   "'storages.backends.s3boto3.S3Boto3Storage'")
+    AWS_ACCESS_KEY_ID = getattr(configuration, 'AWS_ACCESS_KEY_ID', None)
+    AWS_SECRET_ACCESS_KEY = getattr(configuration, 'AWS_SECRET_ACCESS_KEY', None)
+    AWS_DEFAULT_ACL = None
 
 # Attempt to import SAML configuration if it has been defined = False
 try:

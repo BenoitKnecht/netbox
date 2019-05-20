@@ -22,3 +22,5 @@ py-gfm==0.1.4
 pycryptodome==3.8.2
 whitenoise
 django-saml2-auth
+django-storages
+boto3
