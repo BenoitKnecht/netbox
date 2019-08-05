@@ -28,6 +28,11 @@ RUN apk --no-cache add --virtual .build-deps \
     rm -rf /root/.cache && \
     apk --no-cache del .build-deps
 
+RUN addgroup -g31213 unicorn && \
+    adduser  -u31213 -h/opt/netbox/netbox -s/sbin/nologin -Gunicorn -DH unicorn
+
+USER unicorn:unicorn
+
 WORKDIR /opt/netbox/netbox
 
 EXPOSE 8000
